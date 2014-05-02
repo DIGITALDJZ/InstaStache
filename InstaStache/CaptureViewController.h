@@ -1,0 +1,19 @@
+//
+//  CaptureViewController.h
+//  InstaStache
+//
+//  Created by Mark Meyer on 5/1/14.
+//  Copyright (c) 2014 Mark Meyer. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface CaptureViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+- (IBAction)cameraTapped:(id)sender;
+- (IBAction)drawTapped:(id)sender;
+- (IBAction)shareTapped:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imgMainView;
+
+@end

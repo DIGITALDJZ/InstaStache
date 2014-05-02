@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Ak9-hI-Wxy">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Home View Controller - Photos-->
+        <scene sceneID="aVQ-Kq-dJq">
+            <objects>
+                <viewController id="VR9-Ng-WH8" customClass="HomeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sgo-WE-EVP"/>
+                        <viewControllerLayoutGuide type="bottom" id="H0P-Ab-TUf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CQf-zk-eVd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ju4-rW-I93">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="EIs-ta-2Q0">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Photos" image="Photos" id="hhd-TX-dfz"/>
+                    <connections>
+                        <outlet property="collectionView" destination="ju4-rW-I93" id="fQZ-3h-fWA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oPM-4s-Mme" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="637" y="885"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="FYQ-EY-RrW">
+            <objects>
+                <tabBarController definesPresentationContext="YES" id="Ak9-hI-Wxy" sceneMemberID="viewController">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="rf8-fT-7ac">
+                        <rect key="frame" x="129" y="330" width="163" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="VR9-Ng-WH8" kind="relationship" relationship="viewControllers" id="0Gp-eD-405"/>
+                        <segue destination="FyD-Pz-g5a" kind="relationship" relationship="viewControllers" id="Ffx-VZ-8fI"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iVX-m0-mbk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="104" y="952"/>
+        </scene>
+        <!--Capture View Controller - Capture-->
+        <scene sceneID="wM2-oQ-cAs">
+            <objects>
+                <viewController id="FyD-Pz-g5a" customClass="CaptureViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="J4D-jy-jq2"/>
+                        <viewControllerLayoutGuide type="bottom" id="gtc-SS-Kob"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9av-7g-xWJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZpC-WY-sRa">
+                                <rect key="frame" x="40" y="122" width="240" height="240"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qyu-Tn-Dx7">
+                                <rect key="frame" x="0.0" y="24" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem image="Camera" id="mhY-gH-LY4">
+                                        <connections>
+                                            <action selector="cameraTapped:" destination="FyD-Pz-g5a" id="mwH-c1-GwH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="SBR-Q5-n2o"/>
+                                    <barButtonItem image="Pencil" id="db4-6L-02p">
+                                        <connections>
+                                            <action selector="drawTapped:" destination="FyD-Pz-g5a" id="oSC-JE-VQx"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rfj-hd-kpY"/>
+                                    <barButtonItem image="Upload" id="K9f-Ed-As6">
+                                        <connections>
+                                            <action selector="shareTapped:" destination="FyD-Pz-g5a" id="E3E-b1-brn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ypW-qw-dHH">
+                                <rect key="frame" x="0.0" y="391" width="320" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Capture" image="Camera" id="MEq-Mg-F2E"/>
+                    <connections>
+                        <outlet property="imgMainView" destination="ZpC-WY-sRa" id="YXi-oS-5SZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Ng-xF-2Gk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="637" y="1543"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Camera" width="27" height="21"/>
+        <image name="Pencil" width="25" height="25"/>
+        <image name="Photos" width="27" height="22"/>
+        <image name="Upload" width="19" height="27"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
