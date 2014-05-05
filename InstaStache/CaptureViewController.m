@@ -105,22 +105,15 @@
     for (int i = 0; i < self.filters.count; ++i) {
         CIFilter *filter = (CIFilter*)[self.filters objectAtIndex:i];
         CIImage *outputImage = [filter outputImage];
-        UIImageView *imagePreview = [[UIImageView alloc] init];
+        //UIImageView *imagePreview = [[UIImageView alloc] init];
+        UIButton *btnPreview = [[UIButton alloc] initWithFrame:CGRectMake(i * self.scrollView.frame.size.height, 0, self.scrollView.frame.size.height, self.scrollView.frame.size.height)];
         
         CGImageRef cgimg = [self.context createCGImage:outputImage fromRect:[outputImage extent]];
         
-        imagePreview.image = [UIImage imageWithCGImage:cgimg];
-        
-        imagePreview.frame = CGRectMake(i * self.scrollView.frame.size.height, 0, self.scrollView.frame.size.height, self.scrollView.frame.size.height);
-        //useful to retrieve later
-        imagePreview.tag = i;
-        
-        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(applyFilter:)];
-        tapRecognizer.numberOfTapsRequired = 1;
-        tapRecognizer.delegate = self;
-        [imagePreview addGestureRecognizer:tapRecognizer];
-        
-        [self.scrollView addSubview:imagePreview];
+        btnPreview.tag = i;
+        [btnPreview setImage:[UIImage imageWithCGImage:cgimg] forState:UIControlStateNormal];
+        [btnPreview addTarget:self action:@selector(applyFilter:) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollView addSubview:btnPreview];
         
         CGImageRelease(cgimg);
     }
