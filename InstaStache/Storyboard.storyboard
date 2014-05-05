@@ -43,7 +43,7 @@
         <scene sceneID="FYQ-EY-RrW">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="Ak9-hI-Wxy" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="rf8-fT-7ac">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -71,7 +71,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZpC-WY-sRa">
-                                <rect key="frame" x="40" y="122" width="240" height="240"/>
+                                <rect key="frame" x="0.0" y="68" width="320" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qyu-Tn-Dx7">
@@ -97,7 +97,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ypW-qw-dHH">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ypW-qw-dHH">
                                 <rect key="frame" x="0.0" y="391" width="320" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </scrollView>
@@ -107,6 +107,7 @@
                     <tabBarItem key="tabBarItem" title="Capture" image="Camera" id="MEq-Mg-F2E"/>
                     <connections>
                         <outlet property="imgMainView" destination="ZpC-WY-sRa" id="YXi-oS-5SZ"/>
+                        <outlet property="scrollView" destination="ypW-qw-dHH" id="dgP-jJ-o0R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ng-xF-2Gk" userLabel="First Responder" sceneMemberID="firstResponder"/>

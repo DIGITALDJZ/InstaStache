@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MobileCoreServices/UTCoreTypes.h>
+#import <CoreImage/CoreImage.h>
 
-@interface CaptureViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface CaptureViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 
 - (IBAction)cameraTapped:(id)sender;
 - (IBAction)drawTapped:(id)sender;
 - (IBAction)shareTapped:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIImageView *imgMainView;
 
 @end
