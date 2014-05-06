@@ -68,12 +68,19 @@
 }
 
 - (IBAction)shareTapped:(id)sender {
+    UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[self.imgMainView.image] applicationActivities:nil];
+    [self presentViewController:activityView animated:YES completion:^{
+        NSLog(@"Completed activty");
+    }];
+    activityView.completionHandler = ^(NSString *activityType, BOOL completed) {
+        NSLog(@"Activity View completed (%hhd) for %@",completed, activityType);
+    };
 }
 
 - (void)applyFilter:(id)sender {
     NSLog(@"Tapped");
     
-    UIImageView *filterView = (UIImageView *)sender;
+    UIButton *filterView = (UIButton *)sender;
     
     CIFilter *filter = [self.filters objectAtIndex:filterView.tag];
     
@@ -94,13 +101,15 @@
                                        keysAndValues:kCIInputImageKey, image, @"inputIntensity", @0.8, nil];
     CIFilter *monochromeFilter = [CIFilter filterWithName:@"CIColorMonochrome"
                                             keysAndValues:kCIInputImageKey,image, @"inputColor",[CIColor colorWithString:@"Red"], @"inputIntensity",[NSNumber numberWithFloat:0.8], nil];
-    CIFilter *bloomFilter = [CIFilter filterWithName:@"CIBloom" keysAndValues:kCIInputImageKey, image, nil];
-    CIFilter *pixelateFilter = [CIFilter filterWithName:@"CIPixellate" keysAndValues:kCIInputImageKey,image , nil];
+    //CIFilter *bloomFilter = [CIFilter filterWithName:@"CIBloom" keysAndValues:kCIInputImageKey, image, nil];
+    CIFilter *pixelateFilter = [CIFilter filterWithName:@"CIPixellate" keysAndValues:kCIInputImageKey,image , @"inputScale",[NSNumber numberWithFloat:30.0], nil];
+    CIFilter *pointilizeFilter = [CIFilter filterWithName:@"CIVibrance" keysAndValues:kCIInputImageKey,image, @"inputAmount",[NSNumber numberWithFloat:0.8], nil];
     
     [self.filters addObject:sepiaFilter];
     [self.filters addObject:monochromeFilter];
-    [self.filters addObject:bloomFilter];
+    //[self.filters addObject:bloomFilter];
     [self.filters addObject:pixelateFilter];
+    [self.filters addObject:pointilizeFilter];
     
     for (int i = 0; i < self.filters.count; ++i) {
         CIFilter *filter = (CIFilter*)[self.filters objectAtIndex:i];
