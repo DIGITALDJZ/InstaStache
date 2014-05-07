@@ -10,7 +10,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <CoreImage/CoreImage.h>
 
-@interface CaptureViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface CaptureViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 - (IBAction)cameraTapped:(id)sender;
 - (IBAction)drawTapped:(id)sender;

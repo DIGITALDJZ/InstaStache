@@ -68,6 +68,9 @@
 }
 
 - (IBAction)shareTapped:(id)sender {
+    
+    
+    
     UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[self.imgMainView.image] applicationActivities:nil];
     [self presentViewController:activityView animated:YES completion:^{
         NSLog(@"Completed activty");
@@ -152,7 +155,7 @@
         CGFloat newDimension = MIN(width, height);
         CGFloat widthOffset = (width - newDimension) / 2;
         CGFloat heightOffset = (height - newDimension) / 2;
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(newDimension, newDimension), NO, 0.);
+        UIGraphicsBeginImageContext(CGSizeMake(newDimension, newDimension));
         [image drawAtPoint:CGPointMake(-widthOffset, -heightOffset)
                  blendMode:kCGBlendModeCopy
                      alpha:1.];
@@ -171,15 +174,4 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    NSLog(@"Gesture: %@", gestureRecognizer);
-    NSLog(@"Other: %@", otherGestureRecognizer);
-    return YES;
-}
-
--(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    NSLog(@"Gesture: %@", gestureRecognizer);
-    return YES;
-}
 @end
