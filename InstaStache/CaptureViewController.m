@@ -96,25 +96,27 @@
     CGImageRelease(cgimg);
 }
 
-- (void)createFiltersfor:(CIImage *)image {
+-(void)initFiltersFor:(CIImage*)image {
     CIFilter *sepiaFilter = [CIFilter filterWithName:@"CISepiaTone"
                                        keysAndValues:kCIInputImageKey, image, @"inputIntensity", @0.8, nil];
     CIFilter *monochromeFilter = [CIFilter filterWithName:@"CIColorMonochrome"
                                             keysAndValues:kCIInputImageKey,image, @"inputColor",[CIColor colorWithString:@"Red"], @"inputIntensity",[NSNumber numberWithFloat:0.8], nil];
-    //CIFilter *bloomFilter = [CIFilter filterWithName:@"CIBloom" keysAndValues:kCIInputImageKey, image, nil];
     CIFilter *pixelateFilter = [CIFilter filterWithName:@"CIPixellate" keysAndValues:kCIInputImageKey,image , @"inputScale",[NSNumber numberWithFloat:30.0], nil];
     CIFilter *pointilizeFilter = [CIFilter filterWithName:@"CIVibrance" keysAndValues:kCIInputImageKey,image, @"inputAmount",[NSNumber numberWithFloat:0.8], nil];
     
     [self.filters addObject:sepiaFilter];
     [self.filters addObject:monochromeFilter];
-    //[self.filters addObject:bloomFilter];
     [self.filters addObject:pixelateFilter];
     [self.filters addObject:pointilizeFilter];
+}
+
+- (void)createFiltersfor:(CIImage *)image {
+    [self clearFilter];
+    [self initFiltersFor:image];
     
     for (int i = 0; i < self.filters.count; ++i) {
         CIFilter *filter = (CIFilter*)[self.filters objectAtIndex:i];
         CIImage *outputImage = [filter outputImage];
-        //UIImageView *imagePreview = [[UIImageView alloc] init];
         UIButton *btnPreview = [[UIButton alloc] initWithFrame:CGRectMake(i * self.scrollView.frame.size.height, 0, self.scrollView.frame.size.height, self.scrollView.frame.size.height)];
         
         CGImageRef cgimg = [self.context createCGImage:outputImage fromRect:[outputImage extent]];
@@ -127,6 +129,11 @@
         CGImageRelease(cgimg);
     }
     self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.height * self.filters.count, self.scrollView.frame.size.height);
+}
+
+-(void)clearFilter {
+    [self.filters removeAllObjects];
+    [self.scrollView.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
 }
 
 #pragma mark UIImagePickerDelegate
