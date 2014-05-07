@@ -68,8 +68,8 @@
 }
 
 - (IBAction)shareTapped:(id)sender {
-    
-    
+
+    [self uploadImage];
     
     UIActivityViewController *activityView = [[UIActivityViewController alloc] initWithActivityItems:@[self.imgMainView.image] applicationActivities:nil];
     [self presentViewController:activityView animated:YES completion:^{
@@ -78,6 +78,54 @@
     activityView.completionHandler = ^(NSString *activityType, BOOL completed) {
         NSLog(@"Activity View completed (%hhd) for %@",completed, activityType);
     };
+}
+
+-(void)uploadImage {
+    UIImage *thumbnail = [self resizeImage:self.imgMainView.image toSquareOfSize:120];
+    
+    NSData *imageData = UIImageJPEGRepresentation(self.imgMainView.image, 0.8f);
+    NSData *thumbnailImageData = UIImageJPEGRepresentation(thumbnail, 0.8f);
+    
+    // Create the PFFiles and store them in properties since we'll need them later
+    PFFile *photoFile = [PFFile fileWithData:imageData];
+    PFFile *thumbnailFile = [PFFile fileWithData:thumbnailImageData];
+    
+    // Request a background execution task to allow us to finish uploading the photo even if the app is backgrounded
+    UIBackgroundTaskIdentifier fileUploadBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [[UIApplication sharedApplication] endBackgroundTask:fileUploadBackgroundTaskId];
+    }];
+    
+    [photoFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [thumbnailFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [[UIApplication sharedApplication] endBackgroundTask:fileUploadBackgroundTaskId];
+            }];
+        } else {
+            [[UIApplication sharedApplication] endBackgroundTask:fileUploadBackgroundTaskId];
+        }
+    }];
+    
+    // Create a Photo object
+    PFObject *photo = [PFObject objectWithClassName:@"Photo"];
+    //[photo setObject:[PFUser currentUser] forKey:@"user"];
+    [photo setObject:photoFile forKey:@"image"];
+    [photo setObject:thumbnailFile forKey:@"thumbnail"];
+    
+    // Photos are public, but may only be modified by the user who uploaded them
+    //PFACL *photoACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    //[photoACL setPublicReadAccess:YES];
+    //photo.ACL = photoACL;
+    
+    // Request a background execution task to allow us to finish uploading
+    // the photo even if the app is sent to the background
+    UIBackgroundTaskIdentifier photoPostBackgroundTaskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [[UIApplication sharedApplication] endBackgroundTask:photoPostBackgroundTaskId];
+    }];
+    
+    // Save the Photo PFObject
+    [photo saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"Finished background save!");
+    }];
 }
 
 - (void)applyFilter:(id)sender {
@@ -163,6 +211,7 @@
         UIGraphicsEndImageContext();
     }
     self.imgMainView.image = image;
+     
     
     [self createFiltersfor:[[CIImage alloc] initWithImage:image]];
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -172,6 +221,21 @@
 {
     NSLog(@"Canceled");
     [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(UIImage*)resizeImage:(UIImage*)image toSquareOfSize:(CGFloat)size {
+    UIImage *resizedImage = image;
+    
+    CGFloat widthOffset = (image.size.width - size) / 2;
+    CGFloat heightOffset = (image.size.height - size) / 2;
+    UIGraphicsBeginImageContext(CGSizeMake(size, size));
+    [resizedImage drawAtPoint:CGPointMake(-widthOffset, -heightOffset)
+             blendMode:kCGBlendModeCopy
+                 alpha:1.];
+    resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return resizedImage;
 }
 
 @end
