@@ -16,6 +16,7 @@
     [Parse setApplicationId:@"1S1KLf7pwB5xwtLA9OPiI42IR4ulRpFodUUErTux"
                   clientKey:@"F7UcS7LvS7b983fNsWPpdCAzXI1k1QmPUpDnNnuE"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [PFImageView class];
     
     return YES;
 }

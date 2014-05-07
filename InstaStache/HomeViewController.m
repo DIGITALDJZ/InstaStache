@@ -9,30 +9,65 @@
 #import "HomeViewController.h"
 
 @interface HomeViewController ()
-
+@property (strong, nonatomic) NSMutableArray *pictureArray;
 @end
 
 @implementation HomeViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.pictureArray = [[NSMutableArray alloc] init];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadPhotos];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)loadPhotos {
+    PFQuery *query = [PFQuery queryWithClassName:@"Photo"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSLog(@"Successfully retrieved %d photos.", objects.count);
+            [self.pictureArray addObjectsFromArray:objects];
+            [self.collectionView reloadData];
+        } else {
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];}
+
+#pragma mark UICollectionView
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+    return [self.pictureArray count];
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    if ([self.pictureArray count] >= indexPath.row) {
+        PFObject *matches = self.pictureArray[indexPath.row];
+        PFFile *file = [matches objectForKey:@"thumbnail"];
+        
+        PFImageView *imgView = (PFImageView *)[cell viewWithTag:1000];
+        
+        imgView.file = file;
+        [imgView loadInBackground];
+    }
+    return cell;
 }
 
 /*
